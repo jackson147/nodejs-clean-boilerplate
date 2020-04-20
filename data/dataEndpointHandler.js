@@ -14,7 +14,13 @@ module.exports = function makeDataEndpointHandler({ dataService }){
     }
 
     async function getData(httpRequest){
-        const result = await dataService.getData()        
+        const { id } = httpRequest.pathParams || {}
+        const { max, before, after } = httpRequest.queryParams || {}
+    
+        const result = id
+          ? await dataService.findById({ dataId: id })
+          : await dataService.getData({ max, before, after })
+
         return {
             headers: {
                 'Content-Type': 'application/json'

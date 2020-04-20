@@ -1,5 +1,6 @@
 {
   "name": "nodejs-clean-boilerplate",
+  "display-name" : "NodeJS/MongoDB robust API example",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
