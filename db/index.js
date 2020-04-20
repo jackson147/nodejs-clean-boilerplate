@@ -28,6 +28,7 @@ async function makeDb(){
         }
         db = await client.db(dbConfig.db)
         db.makeId = makeIdFromString
+        db.client = client
         return db
     }catch(err){
         console.error(err)

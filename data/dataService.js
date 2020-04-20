@@ -8,7 +8,8 @@ module.exports = function makeDataService({ database }){
     return Object.freeze({
         getData,
         findById,
-        add
+        add,
+        remove
     })
 
     async function getData ({ max = 100, before, after } = {}) {
@@ -59,7 +60,17 @@ module.exports = function makeDataService({ database }){
             created: documentToData(ops[0])
         }
     }
-    
+
+    async function remove ({ dataId, ...data }) {
+        const db = await database
+        if (dataId) {
+            data._id = db.makeId(dataId)
+        }
+
+        const { result } = await db.collection(collectionName).deleteMany(data)
+        return result.n
+    }
+
 
     function documentToData ({ _id: dataId, ...doc }) {
         return makeData({ dataId, ...doc })
