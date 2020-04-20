@@ -1,10 +1,14 @@
 const makeData = require('./data')
+const UniqueConstraintError = require('../helpers/errors').UniqueConstraintError
+
+const collectionName = "data"
 
 module.exports = function makeDataService({ database }){
     //Locks the methods so they cannot be changed.
     return Object.freeze({
         getData,
-        findById
+        findById,
+        add
     })
 
     async function getData ({ max = 100, before, after } = {}) {
@@ -22,7 +26,7 @@ module.exports = function makeDataService({ database }){
 
         try {
             return (await db
-                .collection('data')
+                .collection(collectionName)
                 .find(query)
                 .limit(Number(max))
                 .toArray()).map(documentToData)
@@ -34,12 +38,26 @@ module.exports = function makeDataService({ database }){
     async function findById ({ dataId }) {
         const db = await database
         const found = await db
-            .collection('data')
+            .collection(collectionName)
             .findOne({ _id: db.makeId(dataId) })
         if (found) {
             return documentToData(found)
         }
         return null
+    }
+
+    async function add ({ dataId, ...data }) {
+        const db = await database
+        if (dataId) {
+            data._id = db.makeId(dataId)
+        }
+        const { result, ops } = await db
+            .collection(collectionName)
+            .insertOne(data)
+        return {
+            success: result.ok === 1,
+            created: documentToData(ops[0])
+        }
     }
     
 
