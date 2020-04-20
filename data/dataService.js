@@ -7,13 +7,18 @@ module.exports = function makeDataService({ database }){
     })
 
     async function getData ({ max = 100 } = {}) {
-
+        //Database comes to service as a promise, must ensure it has been connected.
         let db = await database
-        return (await db
-            .collection('data')
-            .find()
-            .limit(Number(max))
-            .toArray()).map(documentToData)
+
+        try {
+            return (await db
+                .collection('data')
+                .find()
+                .limit(Number(max))
+                .toArray()).map(documentToData)
+        }catch(err){
+            throw new Error(`Failed to fetch data objects from database`)
+        }
     }
 
     function documentToData ({ _id: dataId, ...doc }) {

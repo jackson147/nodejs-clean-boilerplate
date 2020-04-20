@@ -1,11 +1,6 @@
 const mongodb = require('mongodb')
 const waitPort = require('wait-port')
-
-const params = {
-    host: '127.0.0.1',
-    port: 27017,
-    db: 'test'
-};
+const dbConfig = require('./config.json')
 
 let client;
 let db;
@@ -21,17 +16,17 @@ async function makeDb(){
 
     try{
         const MongoClient = mongodb.MongoClient
-        const url = `mongodb://${params.host}:${params.port}`
+        const url = `mongodb://${dbConfig.host}:${dbConfig.port}`
         client = new MongoClient(url)
-        let open = await waitPort(params)
-        console.log(`Waiting for ${params.port} to open...`)
+        let open = await waitPort(dbConfig)
+        console.log(`Waiting for ${dbConfig.port} to open...`)
         if(open){
-            console.debug(`Port ${params.port} open, attempting to connect to mongodb server...`)
+            console.debug(`Port ${dbConfig.port} open, attempting to connect to mongodb server...`)
             await client.connect()
         }else{
-            throw new Error(`Could not connect to MongoDB, port ${params.port} not open`)
+            throw new Error(`Could not connect to MongoDB, port ${dbConfig.port} not open`)
         }
-        db = await client.db(params.db)
+        db = await client.db(dbConfig.db)
         db.makeId = makeIdFromString
         return db
     }catch(err){

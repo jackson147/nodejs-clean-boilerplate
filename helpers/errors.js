@@ -28,8 +28,8 @@ class RequiredParameterError extends Error {
   }
 }
 
-module.exports = [
-  UniqueConstraintError,
-  InvalidPropertyError,
-  RequiredParameterError
-]
+module.exports = {
+  UniqueConstraintError : UniqueConstraintError,
+  InvalidPropertyError : InvalidPropertyError,
+  RequiredParameterError : RequiredParameterError
+}

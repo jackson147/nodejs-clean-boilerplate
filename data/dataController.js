@@ -12,6 +12,7 @@ module.exports = function dataController(req, res) {
         .send(data)
     )
     .catch(e => {
+        console.debug("Caught error in catch-all")
         console.error(e)
         res.status(500).end()
     })

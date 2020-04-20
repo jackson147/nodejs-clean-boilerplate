@@ -1,5 +1,5 @@
-const errors = require('./errors')
+const RequiredParameterError = require('./errors').RequiredParameterError
 
 module.exports=function(param) {
-  throw new errors.RequiredParameterError(param)
+  throw new RequiredParameterError(param)
 }
