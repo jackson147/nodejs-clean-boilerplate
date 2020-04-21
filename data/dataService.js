@@ -23,7 +23,7 @@ module.exports = function makeDataService({ database }){
             query._id = after ? { ...query._id, $gt: db.makeId(after) } : query._id
         }
         
-        // console.debug(query)
+        console.debug(query)
 
         try {
             return (await db
