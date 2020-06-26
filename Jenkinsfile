@@ -1,13 +1,13 @@
+def app
+def props
+def version
+
+def remote = [:]
+remote.name = "dev-server"
+remote.host = "newlinkedlist.xyz"
+remote.allowAnyHosts = true
+
 pipeline {
-
-    def app
-    def props
-    def version
-
-    def remote = [:]
-    remote.name = "dev-server"
-    remote.host = "newlinkedlist.xyz"
-    remote.allowAnyHosts = true
 
     agent any
 
