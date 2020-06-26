@@ -1,4 +1,7 @@
 node {
+
+    tools {nodejs "node"}
+    
     def app
     def props
     def version
