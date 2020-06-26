@@ -12,7 +12,6 @@ pipeline {
     agent any
 
     tools {nodejs "node"}
-    tools { mongodb "mongo"}
 
     stages {    
 
