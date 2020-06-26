@@ -17,6 +17,18 @@ node {
         version = props['version']
     }
 
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+     
+    stage('Test') {
+      steps {
+         sh 'npm test'
+      }
+    } 
+
     stage('Build image') {
         /* This builds the actual image; synonymous to
         * docker build on the command line */
