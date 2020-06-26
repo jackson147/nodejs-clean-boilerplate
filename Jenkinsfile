@@ -40,10 +40,10 @@ pipeline {
 
         stage('Build image') {
             steps {
-            /* This builds the actual image; synonymous to
-            * docker build on the command line */
+                /* This builds the actual image; synonymous to
+                * docker build on the command line */
 
-                app = docker.build("jackson147/nodejs-clean-boilerplate")
+                docker.build("jackson147/nodejs-clean-boilerplate")
             }
         }
     }
