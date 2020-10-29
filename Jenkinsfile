@@ -10,33 +10,18 @@ node {
 
 
     stage('Clone repository') {
-        steps {
-            /* Let's make sure we have the repository cloned to our workspace */
-
-            checkout scm
-            // props = readJSON file: 'package.json'
-            // version = props['version']
-        }
+        checkout scm
     }
 
     stage('Install dependencies') {
-        steps {
-            sh 'npm install'
-        }
+        sh 'npm install'
     }
     
     stage('Test') {
-        steps {
-            sh 'npm test'
-        }
+        sh 'npm test'
     } 
 
     stage('Build image') {
-        steps {
-            /* This builds the actual image; synonymous to
-            * docker build on the command line */
-
-            docker.build("jackson147/nodejs-clean-boilerplate")
-        }
+        docker.build("jackson147/nodejs-clean-boilerplate")
     }
 }
