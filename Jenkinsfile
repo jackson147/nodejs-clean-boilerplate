@@ -1,27 +1,52 @@
-node {
-    def app
-    def props = readJSON file: 'package.json'
-    def version = props['version']
+def app
+def props
+def version
 
-    def remote = [:]
-    remote.name = "dev-server"
-    remote.host = "newlinkedlist.xyz"
-    remote.allowAnyHosts = true
+def remote = [:]
+remote.name = "dev-server"
+remote.host = "newlinkedlist.xyz"
+remote.allowAnyHosts = true
+
+pipeline {
+
+    agent any
+
+    tools {nodejs "node"}
+
+    stages {    
 
 
-    stage('Clone repository') {
-        checkout scm
-    }
+        stage('Clone repository') {
+            steps {
+                /* Let's make sure we have the repository cloned to our workspace */
 
-    stage('Install dependencies') {
-        sh 'npm install'
-    }
-    
-    stage('Test') {
-        sh 'npm test'
-    } 
+                checkout scm
+                // props = readJSON file: 'package.json'
+                // version = props['version']
+            }
+        }
 
-    stage('Build image') {
-        docker.build("jackson147/nodejs-clean-boilerplate")
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        } 
+
+        stage('Build image') {
+            steps {
+                /* This builds the actual image; synonymous to
+                * docker build on the command line */
+
+                script {
+                    docker.build("jackson147/nodejs-clean-boilerplate")
+                }
+            }
+        }
     }
 }
