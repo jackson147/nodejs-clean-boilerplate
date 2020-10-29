@@ -21,8 +21,11 @@ pipeline {
                 /* Let's make sure we have the repository cloned to our workspace */
 
                 checkout scm
-                props = readJSON file: 'package.json'
-                version = props['version']
+
+                script {
+                    props = readJSON file: 'package.json'
+                    version = props['version']
+                }
             }
         }
 
