@@ -7,6 +7,8 @@ remote.name = "dev-server"
 remote.host = "newlinkedlist.xyz"
 remote.allowAnyHosts = true
 
+def app
+
 pipeline {
 
     agent any
@@ -44,7 +46,7 @@ pipeline {
                 * docker build on the command line */
 
                 script {
-                    docker.build("jackson147/nodejs-clean-boilerplate")
+                    app = docker.build("jackson147/nodejs-clean-boilerplate")
                 }
             }
         }
