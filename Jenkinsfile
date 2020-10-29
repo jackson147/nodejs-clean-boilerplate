@@ -7,8 +7,6 @@ remote.name = "dev-server"
 remote.host = "newlinkedlist.xyz"
 remote.allowAnyHosts = true
 
-def app
-
 pipeline {
 
     agent any
