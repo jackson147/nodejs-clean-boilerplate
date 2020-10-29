@@ -29,7 +29,6 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
-                sh 'npm test'
             }
         }
         
@@ -39,13 +38,13 @@ pipeline {
             }
         } 
 
-        // stage('Build image') {
-        //     steps {
-        //         /* This builds the actual image; synonymous to
-        //         * docker build on the command line */
+        stage('Build image') {
+            steps {
+                /* This builds the actual image; synonymous to
+                * docker build on the command line */
 
-        //         docker.build("jackson147/nodejs-clean-boilerplate")
-        //     }
-        // }
+                docker.build("jackson147/nodejs-clean-boilerplate")
+            }
+        }
     }
 }
